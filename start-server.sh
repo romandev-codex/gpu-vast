@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# https://docs.vast.ai/documentation/serverless/creating-new-pyworkers
 # wget -qO- "https://raw.githubusercontent.com/romandev-codex/gpu-vast/refs/heads/main/start-server.sh" | bash
 
 set -Eeuo pipefail
@@ -17,6 +18,10 @@ SERVER_DIR="${SERVER_DIR:-$WORKSPACE_DIR/pyworker-src}"
 PYWORKER_REPO="${PYWORKER_REPO:-https://github.com/romandev-codex/gpu-vast.git}"
 PYWORKER_REF="${PYWORKER_REF:-main}"
 AUTO_INSTALL_REQUIREMENTS="${AUTO_INSTALL_REQUIREMENTS:-true}"
+REPORT_ADDR="${REPORT_ADDR:-https://run.vast.ai}"
+USE_SSL="${USE_SSL:-false}"
+UNSECURED="${UNSECURED:-true}"
+WORKER_PORT="${WORKER_PORT:-3000}"
 
 MODEL_PID=""
 WORKER_PID=""
@@ -101,6 +106,14 @@ trap on_term INT TERM
 trap on_exit EXIT
 
 ensure_repo_checkout
+
+VAST_TCP_PORT_KEY="VAST_TCP_PORT_${WORKER_PORT}"
+if [[ -z "${!VAST_TCP_PORT_KEY:-}" ]]; then
+  printf -v "${VAST_TCP_PORT_KEY}" '%s' "$WORKER_PORT"
+  export "${VAST_TCP_PORT_KEY}"
+fi
+
+export REPORT_ADDR WORKER_PORT USE_SSL UNSECURED
 
 echo "[start-server] starting model backend: $MODEL_ENTRYPOINT"
 "$PYTHON_BIN" "$MODEL_ENTRYPOINT" >>"$MODEL_LOG_FILE" 2>&1 &

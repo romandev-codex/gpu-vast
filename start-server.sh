@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# wget -qO- "https://raw.githubusercontent.com/xxx/main/start-server.sh" | bash
+# wget -qO- "https://raw.githubusercontent.com/romandev-codex/gpu-vast/refs/heads/main/start-server.sh" | bash
 
 set -Eeuo pipefail
 
@@ -14,7 +14,7 @@ HEALTH_TIMEOUT_SECONDS="${MODEL_HEALTH_TIMEOUT_SECONDS:-90}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 WORKSPACE_DIR="${WORKSPACE_DIR:-/workspace}"
 SERVER_DIR="${SERVER_DIR:-$WORKSPACE_DIR/pyworker-src}"
-PYWORKER_REPO="${PYWORKER_REPO:-https://github.com/xxx.git}"
+PYWORKER_REPO="${PYWORKER_REPO:-https://github.com/romandev-codex/gpu-vast.git}"
 PYWORKER_REF="${PYWORKER_REF:-main}"
 AUTO_INSTALL_REQUIREMENTS="${AUTO_INSTALL_REQUIREMENTS:-true}"
 

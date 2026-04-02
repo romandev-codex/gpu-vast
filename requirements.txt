@@ -1,2 +1,2 @@
 aiohttp>=3.9.0
-vastai
+vastai-sdk>=0.3.0

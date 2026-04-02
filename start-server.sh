@@ -151,13 +151,16 @@ echo "[start-server] starting worker: $WORKER_ENTRYPOINT"
 "$PYTHON_BIN" "$WORKER_ENTRYPOINT" &
 WORKER_PID=$!
 
-wait -n "$WORKER_PID" "$MODEL_PID"
-exit_code=$?
+# wait -n "$WORKER_PID" "$MODEL_PID"
+# exit_code=$?
 
-if ! kill -0 "$WORKER_PID" 2>/dev/null; then
-  echo "[start-server] worker exited unexpectedly"
-else
-  echo "[start-server] model backend exited unexpectedly"
-fi
+# if ! kill -0 "$WORKER_PID" 2>/dev/null; then
+#   echo "[start-server] worker exited unexpectedly"
+# else
+#   echo "[start-server] model backend exited unexpectedly"
+# fi
 
-exit "$exit_code"
+# exit "$exit_code"
+
+echo "Start script(s) finished, pod is ready to use."
+sleep infinity

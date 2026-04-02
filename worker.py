@@ -8,6 +8,7 @@ from vastai import BenchmarkConfig, HandlerConfig, LogActionConfig, Worker, Work
 MODEL_SERVER_URL = os.getenv("MODEL_SERVER_URL", "http://127.0.0.1")
 MODEL_SERVER_PORT = int(os.getenv("MODEL_SERVER_PORT", "18000"))
 MODEL_LOG_FILE = os.getenv("MODEL_LOG_FILE", "./mock-model.log")
+MODEL_HEALTHCHECK_ENDPOINT = os.getenv("MODEL_HEALTHCHECK_ENDPOINT", "/health")
 
 
 def completions_benchmark_generator() -> Dict[str, Any]:
@@ -50,6 +51,7 @@ worker_config = WorkerConfig(
     model_server_url=MODEL_SERVER_URL,
     model_server_port=MODEL_SERVER_PORT,
     model_log_file=MODEL_LOG_FILE,
+    model_healthcheck_url=MODEL_HEALTHCHECK_ENDPOINT,
     handlers=[
         HandlerConfig(
             route="/v1/completions",

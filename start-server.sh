@@ -3,6 +3,7 @@
 # https://docs.vast.ai/documentation/serverless/creating-new-pyworkers
 # wget -qO- "https://raw.githubusercontent.com/romandev-codex/gpu-vast/refs/heads/main/start-server.sh" | bash
 
+
 set -Eeuo pipefail
 
 MODEL_SERVER_URL="${MODEL_SERVER_URL:-http://127.0.0.1}"
@@ -11,6 +12,7 @@ MODEL_LOG_FILE="${MODEL_LOG_FILE:-/var/log/model/server.log}"
 WORKER_ENTRYPOINT="${WORKER_ENTRYPOINT:-worker.py}"
 MODEL_ENTRYPOINT="${MODEL_ENTRYPOINT:-mock_model_server.py}"
 HEALTH_PATH="${MODEL_HEALTH_PATH:-/health}"
+MODEL_HEALTHCHECK_ENDPOINT="${MODEL_HEALTHCHECK_ENDPOINT:-$HEALTH_PATH}"
 HEALTH_TIMEOUT_SECONDS="${MODEL_HEALTH_TIMEOUT_SECONDS:-90}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 WORKSPACE_DIR="${WORKSPACE_DIR:-/workspace}"
@@ -114,6 +116,7 @@ if [[ -z "${!VAST_TCP_PORT_KEY:-}" ]]; then
 fi
 
 export REPORT_ADDR WORKER_PORT USE_SSL UNSECURED
+export MODEL_HEALTHCHECK_ENDPOINT
 
 echo "[start-server] starting model backend: $MODEL_ENTRYPOINT"
 "$PYTHON_BIN" "$MODEL_ENTRYPOINT" >>"$MODEL_LOG_FILE" 2>&1 &
